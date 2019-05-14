@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  lint:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Linting
+          command: |
+            # Quiet only outputs when there are errors or issues. Reduces output noise.
+            npm install
+            npm run lint
+      - save_cache:
+          paths:
+            - node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
+
+workflows:
+  version: 2
+  ci_jobs:
+    jobs:
+      - lint
