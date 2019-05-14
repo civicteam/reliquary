@@ -36,6 +36,12 @@ The secret string on Secrets Manager
 -p, --secret-path [value]
 The secret file path containing the value of the secrets
 
+-v --verbose
+The log is output in debug mode, with more information
+
+-i --secret-version-id [value]
+The secret version id, use list to show possible values
+
 ## Usage
 
 Fetching secrets

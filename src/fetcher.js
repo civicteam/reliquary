@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const { logger } = require('./logger');
 
 const fetch = (secretName, region = 'us-east-1') => {
   // Create a Secrets Manager client
@@ -30,7 +31,7 @@ const fetch = (secretName, region = 'us-east-1') => {
       if (!oldVersionExists) {
         fs.writeFile(`.secrets/${data.VersionId}.json`, formattedContent, (err2) => {
           if (err2) throw err2;
-          console.log(`Local backup created at ./secrets/${data.VersionId}`);
+          logger.info(`Local backup created at ./secrets/${data.VersionId}`);
         });
       }
 
@@ -43,8 +44,8 @@ const fetch = (secretName, region = 'us-east-1') => {
         fs.appendFileSync('.gitignore', '.secrets');
       }
 
-      console.log(data);
-      console.log('Current version created at ./secrets/current');
+      logger.debug(data);
+      logger.info('Current version created at ./secrets/current');
     }
   });
 };
