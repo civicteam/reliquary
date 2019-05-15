@@ -16,8 +16,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo apt-get update && sudo apt-get install default-jre
-      - run: sudo npm install -g npm
       - run: npm ci
 
       - save_cache:

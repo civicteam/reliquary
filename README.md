@@ -84,3 +84,21 @@ Listing versions of stored secrets, exhibits by default the last 10 records
 ```sh
 node src/index.js --list-secrets
 ```
+
+This should return something like this:
+
+```
+{ Versions: 
+   [ { VersionId: '1d7ea461-066d-4e78-9c97-ccbbf27ba660',
+       LastAccessedDate: '2019 - 05 - 13 T00: 00: 00.000 Z',
+       CreatedDate: '2019 - 05 - 13 T13: 36: 40.566 Z' } ],
+  NextToken: 'AAGWzGu7c3fnjy994XFY80EKjACAkQA3jPXB5sokoh0+PEQgQ+UY7OiiU0yt2WIfHhNLenRUW7cy1X+okG6qkgsEBvqO3kxmm7tzq+awLyWUPVF4wbmXVYdxYHXyiMMzGlR884DfhX3uYJU35BAAAXTkB6pAu5c2U71zGAskNco34Ev1O7GBIPqV56qjBXpWp1n6AAIUDPxgdfz2CkzbN21ZPO48aHkA4OTAyZmriB26wTerot72pgLSS6ze+3RZzk0BdFU/jmXO54g3b/GQetQKBD2X2CCvUfu6zo92gaar',
+  ARN: 'arn:aws:secretsmanager:us-east-1:249634870252:secret:reliquary-test-GRIQNJ',
+  Name: 'reliquary-test' }
+```
+
+Check the CreatedDate and with the VersionId in hands, you can do the rollback with:
+
+```bash
+node src/index.js --rollback-secrets -n reliquary-test -i 5617687a-763b-4301-bb23-bda7dd49c3fe
+```
