@@ -40,7 +40,7 @@ const fetch = (secretName, region = 'us-east-1') => {
 
       // update gitignore
       const gitIgnoreContent = fs.readFileSync('.gitignore', 'utf8');
-      if (!gitIgnoreContent.includes('.secrets')) {
+      if (gitIgnoreContent && !gitIgnoreContent.includes('.secrets')) {
         fs.appendFileSync('.gitignore', '.secrets');
       }
 

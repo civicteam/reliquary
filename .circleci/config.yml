@@ -1,27 +1,72 @@
 version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:latest
+
 jobs:
-  lint:
-    docker:
-      - image: circleci/node:latest
+  build:
+    <<: *defaults
+
     steps:
       - checkout
+
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v2-dependencies-{{ checksum "package.json" }}
-      - run:
-          name: Linting
-          command: |
-            # Quiet only outputs when there are errors or issues. Reduces output noise.
-            npm install
-            npm run lint
+            - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
+      - run: sudo apt-get update && sudo apt-get install default-jre
+      - run: sudo npm install -g npm
+      - run: npm ci
+
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
+
+      - run:
+          name: run eslint
+          command: npm run audit-ci
+
+      - run:
+          name: run eslint
+          command: npm run lint
+
+      - run:
+          name: run tests incl coverage
+          command: npm run test
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Publish package
+          command: npm publish --access=public
 
 workflows:
   version: 2
-  ci_jobs:
+
+  build-and-test:
     jobs:
-      - lint
+      - build
+
+  deploy-npm:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+            branches:
+              ignore: /.*/
+      - deploy:
+          context: Production
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+            branches:
+              ignore: /.*/

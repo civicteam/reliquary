@@ -19,7 +19,7 @@ const update = (secretName, secretString, region = 'us-east-1') => {
     region,
   });
 
-  const secretStringProcessed = secretString.replace(/\\n/g, '');
+  const secretStringProcessed = secretString;
 
   // validate that the secretString is an valid JSON
   try {
@@ -39,7 +39,7 @@ const update = (secretName, secretString, region = 'us-east-1') => {
         });
 
         // the developer should always point to the current.json for the latest secrets
-        fs.writeFileSync('.secrets/current.json', secretStringProcessed, { encoding: 'utf8', flag: 'w' });
+        fs.writeFileSync('.secrets/current.json', JSON.stringify(JSON.parse(secretStringProcessed), null, 2), { encoding: 'utf8', flag: 'w' });
 
         logger.debug(data);
         logger.info('Updated the current version with the newest one');

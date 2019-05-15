@@ -8,6 +8,10 @@ const rollback = (secretName, versionId, region = 'us-east-1') => {
     region,
   });
 
+  if (!versionId) {
+    throw new Error('Version ID is necessary');
+  }
+
   logger.debug(`Rollback to ${secretName} and version ${versionId} started`);
 
   client.getSecretValue({ SecretId: secretName, VersionId: versionId }, (err, data) => {
