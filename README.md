@@ -6,7 +6,7 @@ This is an auxiliary tool to manage secrets in AWS Secrets Manager
 
 It allows to fetch secrets, the current one and store it locally for edition
 
-It allows to update the secrets through the tool and validate the JSON with any tool available to edit JSON
+The secrets can also be updated via the tool. The tool assumes the secrets are in JSON form, and performs validation before uploading. This avoids common errors when editing secrets directly in the AWS console.
 
 Do not update the secrets by AWS Console it is prone to errors!
 
