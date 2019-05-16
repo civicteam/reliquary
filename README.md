@@ -30,7 +30,7 @@ The "AWSCURRENT" version is downloaded and stored at ` .secrets/current.json`
 
 Operation to update the secrets
 
-It creates on .secrets/secret-version-id.json an local backup
+A local backup is stored at `.secrets/<secret-version-id>.json`. The contents of `.secrets/current.json` are then uploaded to AWS.
 
 It updates on AWS the secrets than it writes to current.json
 
