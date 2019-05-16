@@ -4,7 +4,7 @@
 
 This is an auxiliary tool to manage secrets in AWS Secrets Manager
 
-It allows to fetch secrets, the current one and store it locally for edition
+It fetches the latest version of a secret and stores it locally to be edited.
 
 The secrets can also be updated via the tool. The tool assumes the secrets are in JSON form, and performs validation before uploading. This avoids common errors when editing secrets directly in the AWS console.
 
@@ -23,14 +23,14 @@ npm install
 
 Operation to fetch the secrets
 
-It creates on .secrets/current.json the AWSCURRENT version
+The "AWSCURRENT" version is downloaded and stored at ` .secrets/current.json`
 
 
 -u, --update-secrets
 
 Operation to update the secrets
 
-It creates on .secrets/secret-version-id.json an local backup
+A local backup is stored at `.secrets/<secret-version-id>.json`. The contents of `.secrets/current.json` are then uploaded to AWS.
 
 It updates on AWS the secrets than it writes to current.json
 
