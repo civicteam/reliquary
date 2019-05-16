@@ -29,7 +29,12 @@ describe('Tests for the list versions methods', () => {
     AWS.restore('SecretsManager');
   });
 
-  it('Should rollback an secret and write it on the current.json', () => {
-    listVersions('test');
+  it('Should rollback an secret and write it on the current.json', async (done) => {
+    const listing = await listVersions('test');
+    expect(listing).toBeDefined();
+    expect(listing.Versions).toBeDefined();
+    expect(listing.ARN).toBeDefined();
+    expect(listing.Name).toBeDefined();
+    done();
   });
 });

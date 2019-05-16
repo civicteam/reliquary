@@ -2,7 +2,14 @@ const AWS = require('aws-sdk');
 const { update } = require('./updater');
 const { logger } = require('./logger');
 
-const rollback = (secretName, versionId, region = 'us-east-1') => {
+/**
+ * Rollback the version on the Secrets Manager with the specified one
+ * @param secretName
+ * @param versionId
+ * @param region
+ * @returns secretValue returns the secrets value
+ */
+const rollback = async (secretName, versionId, region = 'us-east-1') => {
   // Create a Secrets Manager client
   const client = new AWS.SecretsManager({
     region,
@@ -14,15 +21,14 @@ const rollback = (secretName, versionId, region = 'us-east-1') => {
 
   logger.debug(`Rollback to ${secretName} and version ${versionId} started`);
 
-  client.getSecretValue({ SecretId: secretName, VersionId: versionId }, (err, data) => {
-    if (err) {
-      throw err;
-    } else {
-      logger.debug(`Rollback: Secret fetched ${data}`);
+  const secretValue = await client.getSecretValue({
+    SecretId: secretName,
+    VersionId: versionId,
+  }).promise();
 
-      update(secretName, data.SecretString, region);
-    }
-  });
+  await update(secretName, secretValue.SecretString, region);
+
+  return secretValue;
 };
 
 module.exports = { rollback };

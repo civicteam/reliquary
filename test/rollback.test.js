@@ -28,15 +28,19 @@ describe('Tests for the rollback methods', () => {
     AWS.restore('SecretsManager');
   });
 
-  it('Should rollback an secret and write it on the current.json', () => {
-    rollback('test', 'test');
+  it('Should rollback an secret and write it on the current.json', async (done) => {
+    const secret = await rollback('test', 'test');
 
+    expect(secret).toBeDefined();
     expect(fs.writeFileSync).toHaveBeenCalled();
+
+    done();
   });
 
   it('Should throw an error when not sending the right version id', () => {
-    expect(() => {
+    expect((done) => {
       rollback('test');
+      done();
     }).toThrow();
   });
 });

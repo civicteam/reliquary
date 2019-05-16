@@ -22,9 +22,13 @@ describe('Tests for the fetching methods', () => {
     AWS.restore('SecretsManager');
   });
 
-  it('Should fetch an secret and write it on the current.json', () => {
-    fetch('test');
+  it('Should fetch an secret and write it on the current.json', async () => {
+    const mock = jest.spyOn(fs, 'readFileSync');
+    mock.mockImplementation(() => '');
 
+    const secret = await fetch('test');
+
+    expect(secret).toBeDefined();
     expect(fs.existsSync).toHaveBeenCalled();
     expect(fs.readFileSync).toHaveBeenCalled();
     expect(fs.writeFileSync).toHaveBeenCalled();

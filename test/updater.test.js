@@ -22,15 +22,20 @@ describe('Tests for the updating methods', () => {
     AWS.restore('SecretsManager');
   });
 
-  it('Should update an secret and write it on the current.json', () => {
-    update('test', '{"dev": {"secret1": "d1","secret2": "d2","secret3": "d3"}}');
-    expect(fs.writeFile).toHaveBeenCalled();
+  it('Should update an secret and write it on the current.json', async (done) => {
+    const secret = await update('test', '{"dev": {"secret1": "d1","secret2": "d2","secret3": "d3"}}');
+
+    expect(secret).toBeDefined();
+
     expect(fs.writeFileSync).toHaveBeenCalled();
+
+    done();
   });
 
   it('Should throw an error when sending an wrong json', () => {
-    expect(() => {
+    expect((done) => {
       update('test', '{"dev": {"secret1": "d1""secret2": "d2","secret3": "d3"}}');
+      done();
     }).toThrow();
   });
 });

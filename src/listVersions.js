@@ -7,24 +7,21 @@ const { logger } = require('./logger');
  * @param maxResults
  * @param region
  */
-const listVersions = (secretName, maxResults = 10, region = 'us-east-1') => {
+const listVersions = async (secretName, maxResults = 10, region = 'us-east-1') => {
   // Create a Secrets Manager client
   const client = new AWS.SecretsManager({
     region,
   });
 
-  client.listSecretVersionIds({
+  const secretVersions = await client.listSecretVersionIds({
     SecretId: secretName,
     MaxResults: maxResults,
     IncludeDeprecated: true,
-  },
-  (err, data) => {
-    if (err) {
-      throw err;
-    } else {
-      logger.info('%O', data);
-    }
-  });
+  }).promise();
+
+  logger.info('%O', secretVersions);
+
+  return secretVersions;
 };
 
 module.exports = { listVersions };
