@@ -4,7 +4,7 @@
 
 This is an auxiliary tool to manage secrets in AWS Secrets Manager
 
-It allows to fetch secrets, the current one and store it locally for edition
+It fetches the latest version of a secret and stores it locally to be edited.
 
 It allows to update the secrets through the tool and validate the JSON with any tool available to edit JSON
 
