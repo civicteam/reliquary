@@ -23,7 +23,7 @@ npm install
 
 Operation to fetch the secrets
 
-It creates on .secrets/current.json the AWSCURRENT version
+The "AWSCURRENT" version is downloaded and stored at ` .secrets/current.json`
 
 
 -u, --update-secrets
