@@ -57,26 +57,26 @@ The secret version id, use list to show possible values, when using rollback thi
 Fetching secrets
 
 ```sh
-npm reliquary --fetch-secrets -n <secret-name>
+npx reliquary --fetch-secrets -n <secret-name>
 ```
 
 Fetching secrets with different region
 
 ```sh
-npm reliquary --fetch-secrets -n <secret-name> -r <region>
+npx reliquary --fetch-secrets -n <secret-name> -r <region>
 ```
 
 Updating secrets by reading an local file
 
 ```sh
-npm reliquary --update-secrets -n <secret-name> -p <path>
+npx reliquary --update-secrets -n <secret-name> -p <path>
 ```
 
 
 Listing versions of stored secrets, exhibits by default the last 10 records
 
 ```sh
-npm reliquary --list-secrets
+npx reliquary --list-secrets
 ```
 
 This should return something like this:
@@ -94,5 +94,5 @@ This should return something like this:
 Check the CreatedDate and with the VersionId in hands, you can do the rollback with:
 
 ```bash
-npm reliquary --rollback-secrets -n <secret-name> -i 5617687a-763b-4301-bb23-bda7dd49c3fe
+npx reliquary --rollback-secrets -n <secret-name> -i 5617687a-763b-4301-bb23-bda7dd49c3fe
 ```
