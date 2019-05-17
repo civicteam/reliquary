@@ -100,5 +100,5 @@ This should return something like this:
 Check the CreatedDate and with the VersionId in hands, you can do the rollback with:
 
 ```bash
-node src/index.js --rollback-secrets -n reliquary-test -i 5617687a-763b-4301-bb23-bda7dd49c3fe
+node src/index.js --rollback-secrets -n <secret-name> -i 5617687a-763b-4301-bb23-bda7dd49c3fe
 ```
