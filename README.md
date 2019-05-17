@@ -36,19 +36,15 @@ It updates on AWS the secrets than it writes to current.json
 
 -r, --region [value]
 
-AWS Region, make sure to have the AWS CLI configured with the proper tokens
+Parameter to set AWS Region, it is optional and defaults to us-east-1
 
 -n, --secret-name [value]
 
 The secret name on Secrets Manager
 
--s, --secret-string [value]
-
-The secret string on Secrets Manager
-
 -p, --secret-path [value]
 
-The secret file path containing the value of the secrets
+The secret file path containing the value of the secrets, this is required when using update
 
 -v --verbose
 
@@ -56,33 +52,33 @@ The log is output in debug mode, with more information
 
 -i --secret-version-id [value]
 
-The secret version id, use list to show possible values
+The secret version id, use list to show possible values, when using rollback this is required
 
 ## Usage
 
 Fetching secrets
 
 ```sh
-node src/index.js --fetch-secrets -n reliquary-test
+npm reliquary --fetch-secrets -n <secret-name>
 ```
 
 Fetching secrets with different region
 
 ```sh
-node src/index.js --fetch-secrets -n reliquary-test -r us-east-2
+npm reliquary --fetch-secrets -n <secret-name> -r <region>
 ```
 
 Updating secrets by reading an local file
 
 ```sh
-node src/index.js --update-secrets -n reliquary-test -p .secrets/current.json
+npm reliquary --update-secrets -n <secret-name> -p <path>
 ```
 
 
 Listing versions of stored secrets, exhibits by default the last 10 records
 
 ```sh
-node src/index.js --list-secrets
+npm reliquary --list-secrets
 ```
 
 This should return something like this:
@@ -100,5 +96,5 @@ This should return something like this:
 Check the CreatedDate and with the VersionId in hands, you can do the rollback with:
 
 ```bash
-node src/index.js --rollback-secrets -n reliquary-test -i 5617687a-763b-4301-bb23-bda7dd49c3fe
+npm reliquary --rollback-secrets -n <secret-name> -i 5617687a-763b-4301-bb23-bda7dd49c3fe
 ```
