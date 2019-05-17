@@ -32,8 +32,6 @@ Operation to update the secrets
 
 A local backup is stored at `.secrets/<secret-version-id>.json`. The contents of `.secrets/current.json` are then uploaded to AWS.
 
-It updates on AWS the secrets than it writes to current.json
-
 -r, --region [value]
 
 Parameter to set AWS Region, it is optional and defaults to us-east-1
