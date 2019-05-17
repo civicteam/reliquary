@@ -79,7 +79,7 @@ node src/index.js --update-secrets -n reliquary-test -p .secrets/current.json
 ```
 
 
-Listing versions of stored secrets, exhibits by default the last 10 records
+Listing versions of stored secrets (shows the last 10 records by defaults)
 
 ```sh
 node src/index.js --list-secrets
