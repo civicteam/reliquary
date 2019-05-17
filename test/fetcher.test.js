@@ -33,4 +33,19 @@ describe('Tests for the fetching methods', () => {
     expect(fs.readFileSync).toHaveBeenCalled();
     expect(fs.writeFileSync).toHaveBeenCalled();
   });
+
+  it('Should fetch an secret and write it on the current.json when an old version exists', async () => {
+    const mock = jest.spyOn(fs, 'readFileSync');
+    mock.mockImplementation(() => '.secrets');
+
+    const mock2 = jest.spyOn(fs, 'existsSync');
+    mock2.mockImplementation(() => true);
+
+    const secret = await fetch('test');
+
+    expect(secret).toBeDefined();
+    expect(fs.existsSync).toHaveBeenCalled();
+    expect(fs.readFileSync).toHaveBeenCalled();
+    expect(fs.writeFileSync).toHaveBeenCalled();
+  });
 });
