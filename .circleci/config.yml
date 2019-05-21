@@ -23,9 +23,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
 
-      - run:
-          name: run audit-ci
-          command: npm run audit-ci
+      #- run:
+      #    name: run audit-ci
+      #    command: npm run audit-ci
 
       - run:
           name: run eslint
@@ -34,12 +34,18 @@ jobs:
       - run:
           name: run tests incl coverage
           command: npm run test
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
 
   deploy:
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
       - run:
           name: Publish package
           command: npm publish --access=public
