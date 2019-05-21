@@ -12,47 +12,11 @@ Do not update the secrets by AWS Console it is prone to errors!
 
 This tool automatically adds to the .gitignore an .secrets to avoid pushing the folder to GIT
 
-## Setup
-```sh
-npm install
-```
-
-## CLI Options
-
--f, --fetch-secrets
-
-Operation to fetch the secrets
-
-The "AWSCURRENT" version is downloaded and stored at ` .secrets/current.json`
-
-
--u, --update-secrets
-
-Operation to update the secrets
-
-A local backup is stored at `.secrets/<secret-version-id>.json`. The contents of `.secrets/current.json` are then uploaded to AWS.
-
--r, --region [value]
-
-Parameter to set AWS Region, it is optional and defaults to us-east-1
-
--n, --secret-name [value]
-
-The secret name on Secrets Manager
-
--p, --secret-path [value]
-
-The secret file path containing the value of the secrets, this is required when using update
-
--v --verbose
-
-The log is output in debug mode, with more information
-
--i --secret-version-id [value]
-
-The secret version id, use list to show possible values, when using rollback this is required
-
 ## Usage
+
+You must have NodeJS 8 or superior installed on your machine.
+
+The commands are:
 
 Fetching secrets
 
@@ -96,3 +60,38 @@ Check the CreatedDate and with the VersionId in hands, you can do the rollback w
 ```bash
 npx reliquary --rollback-secrets -n <secret-name> -i 5617687a-763b-4301-bb23-bda7dd49c3fe
 ```
+
+## CLI Options
+
+-f, --fetch-secrets
+
+Operation to fetch the secrets
+
+The "AWSCURRENT" version is downloaded and stored at ` .secrets/current.json`
+
+
+-u, --update-secrets
+
+Operation to update the secrets
+
+A local backup is stored at `.secrets/<secret-version-id>.json`. The contents of `.secrets/current.json` are then uploaded to AWS.
+
+-r, --region [value]
+
+Parameter to set AWS Region, it is optional and defaults to us-east-1
+
+-n, --secret-name [value]
+
+The secret name on Secrets Manager
+
+-p, --secret-path [value]
+
+The secret file path containing the value of the secrets, this is required when using update
+
+-v --verbose
+
+The log is output in debug mode, with more information
+
+-i --secret-version-id [value]
+
+The secret version id, use list to show possible values, when using rollback this is required

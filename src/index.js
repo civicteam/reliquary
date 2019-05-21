@@ -5,7 +5,7 @@ const { fetch } = require('./fetcher');
 const { update } = require('./updater');
 const { listVersions } = require('./listVersions');
 const { rollback } = require('./rollback');
-const { transportsDefinition } = require('./logger');
+const { transportsDefinition, logger } = require('./logger');
 
 program
   .option('-f, --fetch-secrets', 'Operation to fetch the secrets')
@@ -19,8 +19,21 @@ program
   .option('-v, --verbose', 'Output the log in debug mode')
   .parse(process.argv);
 
+// two here means it is only the node command and the index.js file, without parameters
+if (!program.rawArgs.length || program.rawArgs.length === 2) {
+  program.help();
+  process.exit();
+}
+
+if (!program.fetchSecrets && !program.updateSecrets && !program.listSecrets
+  && !program.rollbackSecrets) {
+  logger.error('An operation is required: fetch, list, update or rollback');
+  process.exit();
+}
+
 if (!program.secretName) {
-  throw new Error('Secret Name is necessary, pass it on with -n command parameter');
+  logger.error('Secret Name is necessary, pass it on with -n command parameter');
+  process.exit();
 }
 
 if (program.verbose) {
@@ -31,7 +44,8 @@ if (program.fetchSecrets) {
   fetch(program.secretName, program.region);
 } else if (program.updateSecrets) {
   if (!program.secretPath) {
-    throw new Error('The path to the secret file is necessary');
+    logger.error('The path to the secret file is necessary');
+    process.exit();
   }
   const secretContent = fs.readFileSync(program.secretPath, 'utf-8');
 
