@@ -1,9 +1,9 @@
 {
   "name": "reliquary",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An project for managing secrets",
   "main": "src/index.js",
-  "bin": "./bin/run.sh",
+  "bin": "./.bin/run.sh",
   "scripts": {
     "test": "jest --coverage --config=jest.config.js test/",
     "lint": "eslint src/",
